@@ -60,6 +60,31 @@
 #endif
 #include "qcocoaintegration.h"
 
+struct os_version
+{
+	int major;
+	int minor;
+	int micro;
+
+	inline os_version(int major, int minor, int micro)
+		:major(major)
+		,minor(minor)
+		,micro(micro)
+	{
+	}
+
+	inline bool operator <(const os_version &rhs) const
+	{
+		return std::make_tuple(major, minor, micro) < std::make_tuple(rhs.major, rhs.minor, rhs.micro);
+	}
+};
+
+os_version get_os_version()
+{
+	NSOperatingSystemVersion osv = NSProcessInfo.processInfo.operatingSystemVersion;
+	return os_version(osv.majorVersion, osv.minorVersion, osv.patchVersion);
+}
+
 #ifdef QT_COCOA_ENABLE_ACCESSIBILITY_INSPECTOR
 #include <accessibilityinspector.h>
 #endif
@@ -2120,7 +2145,11 @@ static QPoint mapWindowCoordinates(QWindow *source, QWindow *target, QPoint poin
     [nativeCursor set];
 
     // Make sure the cursor is updated correctly if the mouse does not move and window is under cursor
-    // by creating a fake move event
+    // by creating a fake move event, unless on 10.14 and later where doing so will trigger a security
+    // warning dialog. FIXME: Find a way to update the cursor without fake mouse events.
+    if (os_version(10, 14, 0) < get_os_version())
+        return;
+
     if (m_updatingDrag)
         return;
 
