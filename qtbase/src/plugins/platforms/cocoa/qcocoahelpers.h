@@ -90,7 +90,7 @@ QBrush qt_mac_toQBrush(const NSColor *color, QPalette::ColorGroup colorGroup = Q
 // Creates a mutable shape, it's the caller's responsibility to release.
 HIMutableShapeRef qt_mac_QRegionToHIMutableShape(const QRegion &region);
 
-OSStatus qt_mac_drawCGImage(CGContextRef inContext, const CGRect *inBounds, CGImageRef inImage);
+void qt_mac_drawCGImage(CGContextRef inContext, const CGRect *inBounds, CGImageRef inImage);
 
 NSDragOperation qt_mac_mapDropAction(Qt::DropAction action);
 NSDragOperation qt_mac_mapDropActions(Qt::DropActions actions);
