@@ -27,7 +27,7 @@ QMAKE_MAC_SDK_VERSION = $$xcodeSDKInfo(SDKVersion)
 !equals(MAKEFILE_GENERATOR, XCODE) {
     QMAKE_CFLAGS += -isysroot $$QMAKE_MAC_SDK_PATH
     QMAKE_CXXFLAGS += -isysroot $$QMAKE_MAC_SDK_PATH
-    QMAKE_LFLAGS += -Wl,-syslibroot,$$QMAKE_MAC_SDK_PATH
+    QMAKE_LFLAGS += -isysroot $$QMAKE_MAC_SDK_PATH
 }
 
 sysrootified =
