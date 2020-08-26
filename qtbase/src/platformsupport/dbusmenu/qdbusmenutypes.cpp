@@ -252,6 +252,8 @@ QDBusMenuShortcut QDBusMenuItem::convertKeySequence(const QKeySequence &sequence
             tokens << QStringLiteral("plus");
         else if (keyName == QLatin1String("-"))
             tokens << QStringLiteral("minus");
+        else if (keyName == QLatin1String(","))
+            tokens << QStringLiteral("comma");
         else
             tokens << keyName;
         shortcut << tokens;
