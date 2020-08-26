@@ -346,6 +346,14 @@ NSMenuItem *QCocoaMenuItem::sync()
        [m_native setTitle: QCFString::toNSString(finalString)];
     }
 
+    if (accel == QKeySequence(QKeySequence::Preferences)) {
+        QCocoaMenuLoader *loader = getMenuLoader();
+        NSMenuItem *prefsItem = [loader preferencesMenuItem];
+        if (m_native != prefsItem) {
+            [prefsItem setKeyEquivalent:@""];
+        }
+    }
+
     if (accel.count() == 1) {
         [m_native setKeyEquivalent:keySequenceToKeyEqivalent(accel)];
         [m_native setKeyEquivalentModifierMask:keySequenceModifierMask(accel)];
