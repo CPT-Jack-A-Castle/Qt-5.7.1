@@ -691,8 +691,7 @@ void QCocoaWindow::setVisible(bool visible)
             syncWindowState(window()->windowState());
 
             if (window()->windowState() != Qt::WindowMinimized) {
-                if ((window()->modality() == Qt::WindowModal
-                     || window()->type() == Qt::Sheet)
+                if ((window()->type() == Qt::Sheet)
                         && parentCocoaWindow) {
                     // show the window as a sheet
                     [NSApp beginSheet:m_nsWindow modalForWindow:parentCocoaWindow->m_nsWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
